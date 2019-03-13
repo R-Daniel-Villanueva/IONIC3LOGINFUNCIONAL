@@ -9,30 +9,46 @@ import { HomePage } from '../pages/home/home';
 import { AboutPage } from '../pages/about/about';
 import { ConstumerPage } from '../pages/constumer/constumer';
 import { PipesModule } from '../pipes/pipes.module';
+import { CreateacountPage } from '../pages/createacount/createacount';
+import { StudentserviceProvider } from '../providers/studentservice/studentservice';
+import { HttpClientModule } from '@angular/common/http';
+import { LoginProvider } from '../providers/loginservice/loginservice';
+import { LoginProviderMock } from '../mock/loginProviderMock';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     AboutPage,
-    ConstumerPage
+    ConstumerPage,
+    CreateacountPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    PipesModule
+    PipesModule,
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
     AboutPage,
-    ConstumerPage
+    ConstumerPage,
+    CreateacountPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    StudentserviceProvider,
+    /*---------------------------
+    {
+      provide: LoginProvider,
+      useClass:LoginProviderMock
+    },
+    COMENTAR HASTA AQUI SI SE QUIERE HACER UN CONSUMO CON EL SERVICIO ORIGINAL*/ 
+    LoginProvider
   ]
 })
 export class AppModule {}

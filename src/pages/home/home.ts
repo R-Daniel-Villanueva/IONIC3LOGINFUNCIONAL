@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController} from 'ionic-angular';
 import { AboutPage } from '../about/about';
+import { CreateacountPage } from '../createacount/createacount';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { LoginProvider } from '../../providers/loginservice/loginservice';
 
 @Component({
   selector: 'page-home',
@@ -18,9 +20,11 @@ export class HomePage {
   ];
   cost:number;
   loginForm:FormGroup;
+  pwd:string;
   
   constructor(public navCtrl: NavController,
-    private fb:FormBuilder) {
+    private fb:FormBuilder,
+    private login_provider:LoginProvider) {
       this.loginForm=this.fb.group({
         user:['',Validators.required],
         pwd:['',Validators.required]
@@ -35,11 +39,21 @@ export class HomePage {
       courses:this.cursos,
       date:new Date(),
       cost:this.cost};
+      
     //console.log(data);
     this.navCtrl.push(AboutPage,data);
+  }    
+  gocreate(){
+    this.navCtrl.push(CreateacountPage);
   }     
   login(){
-    
-  }
+    this.login_provider.loginService(
+      this.loginForm.get('user').value,
+      this.loginForm.get('pwd').value).
+      subscribe((response)=>{
+        console.log(response);
+      },error=> console.log(error));    
+    }
+
     
 }
