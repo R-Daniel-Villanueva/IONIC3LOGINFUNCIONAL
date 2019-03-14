@@ -4,6 +4,8 @@ import { AboutPage } from '../about/about';
 import { CreateacountPage } from '../createacount/createacount';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoginProvider } from '../../providers/loginservice/loginservice';
+import { AccesoPage } from '../acceso/acceso';
+import { EventsManagerProvider } from '../../providers/events-manager/events-manager';
 
 @Component({
   selector: 'page-home',
@@ -24,7 +26,8 @@ export class HomePage {
   
   constructor(public navCtrl: NavController,
     private fb:FormBuilder,
-    private login_provider:LoginProvider) {
+    private login_provider:LoginProvider,
+    private events_manager:EventsManagerProvider) {
       this.loginForm=this.fb.group({
         user:['',Validators.required],
         pwd:['',Validators.required]
@@ -45,7 +48,8 @@ export class HomePage {
   }    
   gocreate(){
     this.navCtrl.push(CreateacountPage);
-  }     
+  } 
+  /*    
   login(){
     this.login_provider.loginService(
       this.loginForm.get('user').value,
@@ -54,6 +58,23 @@ export class HomePage {
         console.log(response);
       },error=> console.log(error));    
     }
-
+  */   
+  login(){
+    this.events_manager.setIsLoading(true);
+    this.login_provider.loginService(
+      this.loginForm.get('user').value,
+      this.loginForm.get('pwd').value).
+      subscribe((response)=>{
+        console.log(response);
+        this.events_manager.setIsLoading(false);
+        this.navCtrl.push(AccesoPage,response);
+        }, (error)=> {
+          console.log(error);
+          this.events_manager.setIsLoading(false);
+          this.events_manager.setMsgToast(error.error.message);
+          console.log(error);
+        }
+      ); 
+  }
     
 }

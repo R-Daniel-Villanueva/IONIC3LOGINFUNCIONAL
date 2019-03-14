@@ -14,6 +14,9 @@ import { StudentserviceProvider } from '../providers/studentservice/studentservi
 import { HttpClientModule } from '@angular/common/http';
 import { LoginProvider } from '../providers/loginservice/loginservice';
 import { LoginProviderMock } from '../mock/loginProviderMock';
+import { AccesoPage } from '../pages/acceso/acceso';
+import { EventsManagerProvider } from '../providers/events-manager/events-manager';
+import { CardComponent } from '../components/card/card';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,9 @@ import { LoginProviderMock } from '../mock/loginProviderMock';
     HomePage,
     AboutPage,
     ConstumerPage,
-    CreateacountPage
+    CreateacountPage,
+    AccesoPage,
+    CardComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +40,9 @@ import { LoginProviderMock } from '../mock/loginProviderMock';
     HomePage,
     AboutPage,
     ConstumerPage,
-    CreateacountPage
+    CreateacountPage,
+    AccesoPage,
+    CardComponent
   ],
   providers: [
     StatusBar,
@@ -47,8 +54,9 @@ import { LoginProviderMock } from '../mock/loginProviderMock';
       provide: LoginProvider,
       useClass:LoginProviderMock
     },
-    COMENTAR HASTA AQUI SI SE QUIERE HACER UN CONSUMO CON EL SERVICIO ORIGINAL*/ 
-    LoginProvider
+    /*COMENTAR HASTA AQUI SI SE QUIERE HACER UN CONSUMO CON EL SERVICIO ORIGINAL*/ 
+    LoginProvider,
+    EventsManagerProvider
   ]
 })
 export class AppModule {}
